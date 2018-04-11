@@ -1,0 +1,16 @@
+/*login的样式*/
+body{
+    background: url("../image/2.jpg") no-repeat 40% 0;
+
+}
+.container-fluid {
+    margin-top: 200px;
+   opacity: 0.8;
+}
+.input-control {
+     margin-bottom: 20px;
+ }
+.btn {
+    display: block;
+    margin: 0 auto;
+}

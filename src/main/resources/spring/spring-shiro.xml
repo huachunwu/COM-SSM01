@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+              http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 启用shrio授权注解拦截方式 -->
+    <bean name="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 装配 securityManager -->
+        <property name="securityManager" ref="securityManager"/>
+        <!--配置登录页面-->
+        <property name="loginUrl" value="/index.jsp"/>
+        <!-- 登陆成功后的一面 -->
+        <property name="successUrl" value="/jsp/success.jsp"/>
+        <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>
+        <!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截.  -->
+        <property name="filterChainDefinitions">
+            <value>
+                /index.jsp=anon
+                /jsp/success.jsp=anon
+                /jsp/fail.jsp=anon
+                /jsp/user.jsp = roles[user]
+                /jsp/admin.jsp = roles[admin]
+                /logout = logout
+            </value>
+        </property>
+    </bean>
+    <!-- 配置进行授权和认证的 Realm -->
+    <bean name="myRealm" class="top.cms.realm.CMSRealm"></bean>
+    <!-- 配置 Shiro 的 SecurityManager Bean. -->
+    <bean name="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+    </bean>
+
+</beans>

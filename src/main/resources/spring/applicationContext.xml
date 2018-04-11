@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <context:component-scan base-package="top.cms"/>
+    <context:property-placeholder location="classpath:db.properties"/>
+    <aop:aspectj-autoproxy/>
+    <context:annotation-config />
+    <!--任务配置1-->
+    <bean id="job1" class="top.cms.job.MyJob"/>
+    <bean id="jobDetail1" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 执行的类 -->
+        <property name="targetObject">
+            <ref bean="job1"/>
+        </property>
+        <!-- 类中的方法 -->
+        <property name="targetMethod">
+            <value>sayHello</value>
+        </property>
+    </bean>
+    <bean id="cronTrigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="jobDetail1"/>
+        </property>
+        <property name="cronExpression">
+            <value>0/1 * * * * ?</value>
+        </property>
+    </bean>
+    <!-- 总配置 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!-- 添加触发器 -->
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger1"/>
+            </list>
+        </property>
+    </bean>
+    <!--数据源-->
+    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <!--基本配置-->
+        <!--数据驱动-->
+        <property name="driverClassName" value="${mysql.driver}"/>
+        <!--用户名-->
+        <property name="username" value="${mysql.username}"/>
+        <!--密码-->
+        <property name="password" value="${mysql.password}"/>
+        <!--数据库地址-->
+        <property name="url" value="${mysql.url}"/>
+     </bean>
+    <!--sqlSessionFactory-->
+    <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+    </bean>
+    <!--mapper扫描器，配置扫描Dao接口的包，动态实现Dao接口。注入到Spring容器中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="top.cms.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+    <!--声明事务管理器-->
+    <!--配置spring的PlatformTransactionManager，名字为默认值-->
+    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+
+</beans>
