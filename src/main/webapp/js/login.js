@@ -3,9 +3,8 @@
 $("#loading").on('click',function () {
     var myMessage=new $.zui.Messager('<i class="icon icon-spin icon-spinner"></i>&nbsp;正在登录请稍后...',{
         time:0,
-        parent:'body',
+        placement:'center',
         close:false,
-
     });
     myMessage.show();
     setTimeout(function () {

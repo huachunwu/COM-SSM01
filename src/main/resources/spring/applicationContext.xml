@@ -33,7 +33,7 @@
             <ref bean="jobDetail1"/>
         </property>
         <property name="cronExpression">
-            <value>0/1 * * * * ?</value>
+            <value>0 0/1 * * * ?</value>
         </property>
     </bean>
     <!-- 总配置 -->
@@ -46,7 +46,7 @@
         </property>
     </bean>
     <!--数据源-->
-    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!--基本配置-->
         <!--数据驱动-->
         <property name="driverClassName" value="${mysql.driver}"/>
@@ -61,19 +61,20 @@
     <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
     </bean>
     <!--mapper扫描器，配置扫描Dao接口的包，动态实现Dao接口。注入到Spring容器中-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="top.cms.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
-
-
     <!--声明事务管理器-->
     <!--配置spring的PlatformTransactionManager，名字为默认值-->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 

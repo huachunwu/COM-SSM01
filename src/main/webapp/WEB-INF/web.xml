@@ -7,7 +7,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring/applicationContext.xml,classpath:spring/spring-shiro.xml</param-value>
     </context-param>
-    
     <!--解决post乱码问题-->
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -56,7 +55,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.cms</url-pattern>
     </servlet-mapping>
 
     <!--默认访问页面-->

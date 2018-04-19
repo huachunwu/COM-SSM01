@@ -14,30 +14,34 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!-- 启用shrio授权注解拦截方式 -->
     <bean name="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <!-- 装配 securityManager -->
-        <property name="securityManager" ref="securityManager"/>
-        <!--配置登录页面-->
-        <property name="loginUrl" value="/index.jsp"/>
-        <!-- 登陆成功后的一面 -->
-        <property name="successUrl" value="/jsp/success.jsp"/>
-        <property name="unauthorizedUrl" value="/jsp/unauthorized.jsp"/>
-        <!-- 具体配置需要拦截哪些 URL, 以及访问对应的 URL 时使用 Shiro 的什么 Filter 进行拦截.  -->
+        <!--注入安全管理器对象-->
+        <property name="securityManager" ref="securityManager"></property>
+        <!--注入相关页面URL-->
+        <property name="loginUrl" value="/login.jsp"/>
+        <property name="successUrl" value="/admin_index.jsp"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <!--注入拦截器规则-->
         <property name="filterChainDefinitions">
             <value>
-                /index.jsp=anon
-                /jsp/success.jsp=anon
-                /jsp/fail.jsp=anon
-                /jsp/user.jsp = roles[user]
-                /jsp/admin.jsp = roles[admin]
-                /logout = logout
+                /css/** =anon
+                /CheckImage.cms* =anon
+                /sysUser/login.cms* =anon
+                /js/** =anon
+                /zui/** =anon
+                /image/** =anon
+                /login.jsp* =anon
+                /unauthorized.jsp* =anon
+                /sysRole/listByRoleId.cms* =anon
+                /** = authc
             </value>
         </property>
     </bean>
-    <!-- 配置进行授权和认证的 Realm -->
-    <bean name="myRealm" class="top.cms.realm.CMSRealm"></bean>
-    <!-- 配置 Shiro 的 SecurityManager Bean. -->
-    <bean name="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="myRealm"/>
-    </bean>
 
+    <!--注册安全管理器对象-->
+    <bean name="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="cmsRealm"/>
+    </bean>
+    <!--注册realm-->
+    <bean name="cmsRealm" class="top.cms.realm.CMSRealm">
+    </bean>
 </beans>
