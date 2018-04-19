@@ -1,8 +1,12 @@
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import top.cms.bean.SysMenu;
 import top.cms.bean.SysRole;
 import top.cms.bean.SysUser;
 import top.cms.dao.SysRoleMapper;
@@ -10,7 +14,9 @@ import top.cms.service.SysRoleService;
 
 import javax.management.relation.Role;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 测试页面
@@ -29,9 +35,17 @@ public class RoleTest {
         System.out.println(sysRole);
     }
     @Test
-    public void findTest2(HttpSession session){
-        SysUser sysUser = (SysUser) session.getAttribute("SysUser");
-        String s = sysRoleService.listByRoleId(sysUser.getRoleId());
-        System.out.println(s);
+    public void findTest2(){
+        List<SysMenu> sysMenus = sysRoleService.listByRoleId("1");
+        for (SysMenu sysMenu:sysMenus){
+            System.out.println(sysMenu);
+        }
+        Gson gson=new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        Map<String,Object> map=new HashMap<>();
+        map.put("map",sysMenus);
+        String s = gson.toJson(sysMenus);
+        String $1$2 = s.replaceAll("\"(\\w+)\"(\\s*:\\s*)", "$1$2");
+        String s1 = $1$2.replaceAll("\"", "");
+        System.out.println(s1);
     }
 }

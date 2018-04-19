@@ -1,5 +1,6 @@
 package top.cms.service.impl;
 
+import com.alibaba.druid.sql.visitor.functions.If;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.Mergeable;
@@ -24,47 +25,53 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public List<SysMenu> listByRoleId(String roleId) {
         SysRole sysRole = sysRoleMapper.findSysRole(roleId);
+        /**
+         * 原始数据
+         */
         List<SysAuth> sysAuths = sysRole.getSysAuths();
-        List<SysMenu> menuList=new ArrayList<SysMenu>();
+        /**
+         * 最后结果
+         */
+        List<SysMenu> sysMenus=new ArrayList<SysMenu>();
         for (SysAuth sysAuth:sysAuths){
-            if (StringUtils.isNotBlank(sysAuth.getAuthFId())){
-                SysMenu sysMenu=new SysMenu();
-                sysMenu.setId(sysAuth.getAuthId());
-                sysMenu.setHtml("<a href='"+sysAuth.getAuthUrl()+"'><i class='"+sysAuth.getAuthIcon()+"'></i>"+sysAuth.getAuthName()+"</a>");
-                menuList.add(sysMenu);
+            System.out.println(sysAuth);
+        }
+        for (SysAuth sysAuth1:sysAuths){
+            SysMenu sysMenu=null;
+            if ("0".equals(sysAuth1.getAuthFId())){
+                sysMenu=new SysMenu();
+                sysMenu.setHtml("<a href='"+sysAuth1.getAuthUrl()+"'><i class='"+sysAuth1.getAuthIcon()+"'></i>"+sysAuth1.getAuthName()+"</a>");
+                sysMenu.setId(sysAuth1.getAuthId());
+                sysMenus.add(sysMenu);
             }
         }
-        for (SysMenu sysMenu:menuList){
-            sysMenu.setChildren(getChaild(sysMenu.getId(),sysAuths));
+        for (SysMenu sysMenu:sysMenus){
+            sysMenu.setChildren(getChild(sysMenu.getId(),sysAuths));
         }
-        return menuList;
+
+        return sysMenus;
     }
 
-    /**
-     * 递归查找子菜单
-     * @param id 当前菜单id
-     * @param sysAuths 查找的列表
-     * @return
-     */
-    public List<SysMenu> getChaild(String id,List<SysAuth> sysAuths){
+    public List<SysMenu> getChild(String id,List<SysAuth> sysAuths){
         List<SysMenu> childList=new ArrayList<SysMenu>();
         for (SysAuth sysAuth:sysAuths){
-            if (StringUtils.isNotBlank(sysAuth.getAuthFId())){
+            SysMenu sysMenu=null;
+            if (!"0".equals(sysAuth.getAuthFId())){
                 if (sysAuth.getAuthFId().equals(id)){
-                    SysMenu sysMenu=new SysMenu();
-                    sysMenu.setId(sysAuth.getAuthId());
+                    sysMenu=new SysMenu();
                     sysMenu.setHtml("<a href='"+sysAuth.getAuthUrl()+"'><i class='"+sysAuth.getAuthIcon()+"'></i>"+sysAuth.getAuthName()+"</a>");
+                    sysMenu.setId(sysAuth.getAuthId());
                     childList.add(sysMenu);
                 }
             }
         }
-        // 把子菜单的子菜单再循环一遍
         for (SysMenu sysMenu:childList){
-                sysMenu.setChildren(getChaild(sysMenu.getId(),sysAuths));
+            sysMenu.setChildren(getChild(sysMenu.getId(),sysAuths));
         }
         if (childList.size()==0){
             return null;
         }
         return childList;
     }
+
 }

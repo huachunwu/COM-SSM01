@@ -29,9 +29,16 @@
 <script src="${pageContext.request.contextPath}/js/left.js"></script>
 <script>
     $(function () {
-        $.post("sysRole/listByRoleId.cms",function (data) {
-            $("#treeMenu").tree({data: data});
+        $.ajax({
+            url:"sysRole/listByRoleId.cms",
+            dataType:"json",
+            type:"post",
+            success:function (myTreeData ) {
+                var myTree=$("#treeMenu").data("zui.tree");
+                myTree.reload(myTreeData);
+            }
         });
+
     });
 </script>
 </body>

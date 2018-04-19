@@ -1,6 +1,8 @@
 package top.cms.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +28,10 @@ public class SysRoleController {
         String roleId = sysUser.getRoleId();
         System.out.println(roleId);
         List<SysMenu> sysMenus = sysRoleService.listByRoleId(sysUser.getRoleId());
-        String s = JSON.toJSONString(sysMenus);
-        System.out.println(s);
+        Gson gson=new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        String s = gson.toJson(sysMenus);
+        String s1 = s.replaceAll("\"(\\w+)\"(\\s*:\\s*)", "$1$2");
+        System.out.println(s1);
         return s;
     }
 }
