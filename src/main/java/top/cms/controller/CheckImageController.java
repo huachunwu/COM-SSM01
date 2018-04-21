@@ -1,5 +1,6 @@
 package top.cms.controller;
 
+import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,6 +19,7 @@ import java.util.Random;
  */
 @Controller
 public class CheckImageController {
+    @RequiresGuest
     @RequestMapping(value = "CheckImage.cms")
     public void checkImage(HttpSession session, HttpServletResponse response) throws IOException {
         Random random=new Random();

@@ -40,8 +40,9 @@
         </div>
         <!--验证码-->
         <div class="input-control row col-sm-offset-3 col-sm-6 col-sm-offset-3">
-            <input id="check" type="text" placeholder="验证码" class="form-control col-xs-6" style="width: 50%" name="piccode" value="${msg}">
+            <input id="check" type="text" placeholder="验证码" class="form-control col-xs-6" style="width: 50%" name="piccode">
             <img src="${pageContext.request.contextPath}/CheckImage.cms" height="40" width="160" class="col-xs-6" id="piccode">
+            <span style="color: #ea644a">${msg}</span>
         </div>
         <br/>
         <br/>

@@ -38,13 +38,13 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- 品牌名称或logo -->
-            <a class="navbar-brand" href="#">YHMI</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp">YHMI</a>
         </div>
         <!-- 导航项目 -->
         <div class="collapse navbar-collapse navbar-collapse-example">
             <!-- 一般导航项目 -->
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><i class="icon icon-home"></i>&nbsp;&nbsp;前台页面</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/index.jsp"><i class="icon icon-home"></i>&nbsp;&nbsp;前台页面</a></li>
             </ul>
             <!-- 右侧的导航项目 -->
             <ul class="nav navbar-nav navbar-right">
@@ -57,7 +57,7 @@
                         <li><a href="your/nice/url"><i class="icon icon-user"></i> 个人信息</a></li>
                         <li><a href="your/nice/url"><i class="icon icon-edit-sign"></i> 修改密码</a></li>
                         <li class="divider"></li>
-                        <li><a href="your/nice/url"><i class="icon icon-signout"></i> 用户注销</a></li>
+                        <li><a href="sysUser/logOut.cms" id="logOut"><i class="icon icon-signout"></i> 用户注销</a></li>
                     </ul>
                 </li>
             </ul>
@@ -68,5 +68,6 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 <!-- ZUI Javascript组件 -->
 <script src="${pageContext.request.contextPath}/zui/js/zui.js"></script>
+<script src="${pageContext.request.contextPath}/js/header.js"></script>
 </body>
 </html>

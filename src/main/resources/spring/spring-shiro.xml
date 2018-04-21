@@ -2,36 +2,35 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd
-              http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd">
-    <!-- 启用shrio授权注解拦截方式 -->
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
     <bean name="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <!--注入安全管理器对象-->
-        <property name="securityManager" ref="securityManager"></property>
+        <property name="securityManager" ref="securityManager"/>
+
         <!--注入相关页面URL-->
-        <property name="loginUrl" value="/login.jsp"/>
-        <property name="successUrl" value="/admin_index.jsp"/>
+        <property name="loginUrl" value="/index.jsp"/>
+        <!--无权访问跳转页面-->
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
         <!--注入拦截器规则-->
         <property name="filterChainDefinitions">
             <value>
+                <!--静态资源放行-->
                 /css/** =anon
-                /CheckImage.cms* =anon
-                /sysUser/login.cms* =anon
                 /js/** =anon
                 /zui/** =anon
                 /image/** =anon
-                /login.jsp* =anon
+                <!--对错误页面进行放行-->
                 /unauthorized.jsp* =anon
-                /sysRole/listByRoleId.cms* =anon
+                <!--验证码，可匿名访问-->
+                /CheckImage.cms* =anon
+                /login.jsp* =anon
+                /sysUser/login.cms* =anon
                 /** = authc
             </value>
         </property>
@@ -39,9 +38,38 @@
 
     <!--注册安全管理器对象-->
     <bean name="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--注入realm-->
         <property name="realm" ref="cmsRealm"/>
+        <!--注入session管理器-->
+        <property name="sessionManager" ref="sessionManager"/>
+        <!--记住我-->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
     <!--注册realm-->
     <bean name="cmsRealm" class="top.cms.realm.CMSRealm">
     </bean>
+
+
+
+    <!--会话管理器-->
+    <bean name="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!--session失效时长，单位毫秒-->
+        <property name="globalSessionTimeout" value="600000"/>
+        <!--删除失效的session-->
+        <property name="deleteInvalidSessions" value="true"/>
+    </bean>
+    <!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 -->
+    <bean name="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+    <!-- 记住我cookie -->
+    <bean name="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- rememberMe是cookie的名字 -->
+        <constructor-arg value="rememberMe" />
+        <!-- 记住我cookie生效时间30天 -->
+        <property name="maxAge" value="2592000" />
+    </bean>
+
+
 </beans>

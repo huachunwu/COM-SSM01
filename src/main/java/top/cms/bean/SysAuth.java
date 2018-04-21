@@ -31,6 +31,7 @@ public class SysAuth implements Serializable {
     /**
      * 是否是菜单
      */
+    private String authCode;
    private String authIsMenu;
    private List<SysRole> sysRoles;
     public String getAuthId() {
@@ -89,6 +90,14 @@ public class SysAuth implements Serializable {
         this.authIsMenu = authIsMenu;
     }
 
+    public String getAuthCode() {
+        return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
+
     @Override
     public String toString() {
         return "SysAuth{" +
@@ -97,6 +106,7 @@ public class SysAuth implements Serializable {
                 ", authFId='" + authFId + '\'' +
                 ", authName='" + authName + '\'' +
                 ", authIcon='" + authIcon + '\'' +
+                ", authCode='" + authCode + '\'' +
                 ", authIsMenu='" + authIsMenu + '\'' +
                 ", sysRoles=" + sysRoles +
                 '}';

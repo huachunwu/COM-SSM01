@@ -3,6 +3,7 @@ package top.cms.controller;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import java.util.List;
 public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
+    @RequiresAuthentication
     @RequestMapping(value = "/listByRoleId.cms",produces = "application/json; charset=utf-8")
     public  @ResponseBody String listByRoleId(HttpSession session){
         SysUser sysUser = (SysUser) session.getAttribute("SysUser");

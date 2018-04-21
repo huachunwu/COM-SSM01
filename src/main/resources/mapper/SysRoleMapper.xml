@@ -15,6 +15,7 @@
             <result property="authName" column="auth_name"/>
             <result property="authIcon" column="auth_icon"/>
             <result property="authIsMenu" column="auth_is_menu"/>
+            <result property="authCode" column="auth_code"/>
         </collection>
     </resultMap>
     <!--查询角色表关联的-->

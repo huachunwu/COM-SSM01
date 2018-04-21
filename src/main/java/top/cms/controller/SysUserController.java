@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,6 +63,16 @@ public class SysUserController {
             request.setAttribute("msg","验证码错误");
             return "login";
         }
+    }
 
+    /**
+     * 用户退出
+     * @return 跳转地址
+     */
+    @RequestMapping(value = "/logOut.cms")
+    public String logOut(){
+            Subject subject=SecurityUtils.getSubject();
+            subject.logout();
+            return "redirect:/index.jsp";
     }
 }

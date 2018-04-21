@@ -1,9 +1,4 @@
 package top.cms.service.impl;
-
-import com.alibaba.druid.sql.visitor.functions.If;
-import com.alibaba.fastjson.JSON;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.Mergeable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.cms.bean.SysAuth;
@@ -52,6 +47,13 @@ public class SysRoleServiceImpl implements SysRoleService {
         return sysMenus;
     }
 
+    /**
+     * 递归子类
+     * @param id 父的id
+     * @param sysAuths 所有权限
+     * @return 返回递归出的List集合
+     */
+    @Override
     public List<SysMenu> getChild(String id,List<SysAuth> sysAuths){
         List<SysMenu> childList=new ArrayList<SysMenu>();
         for (SysAuth sysAuth:sysAuths){
@@ -73,5 +75,21 @@ public class SysRoleServiceImpl implements SysRoleService {
         }
         return childList;
     }
+
+    /**
+     * 遍历权限表
+     * @param roleId 根据角色表id
+     * @return
+     */
+    @Override
+    public List<SysAuth> findSysRoleAuth(String roleId) {
+        SysRole sysRole = sysRoleMapper.findSysRole(roleId);
+        /**
+         * 原始数据
+         */
+        List<SysAuth> sysAuths = sysRole.getSysAuths();
+        return sysAuths;
+    }
+
 
 }
