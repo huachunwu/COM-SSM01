@@ -11,7 +11,7 @@ public class UUIDUtils {
      * 生成uuid
      * @return 返回生成的UUID
      */
-    public String uuid(){
+    public static String uuid(){
         return UUID.randomUUID().toString();
     }
 }
