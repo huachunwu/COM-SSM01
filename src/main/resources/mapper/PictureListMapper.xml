@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.cms.dao.PictureListMapper">
+    <resultMap id="pictureList" type="PictureList">
+        <id property="pLId" column="p_l_id"/>
+        <result property="pLUrl" column="p_l_url"/>
+        <result property="depict" column="depict"/>
+        <result property="pId" column="p_id"/>
+    </resultMap>
+    <select id="findPictureByPid" resultMap="pictureList" parameterType="string">
+        select p_l_id,p_l_url,depict,p_id from picture_list where p_id=#{pId}
+    </select>
+    <insert id="insertPicture" parameterType="PictureList">
+        INSERT INTO picture_list(p_l_id, p_l_url, depict, p_id) values (#{pLId},#{pLUrl},#{depict},#{pId})
+    </insert>
+
+    <select id="findPictureByPLId" resultMap="pictureList" parameterType="string">
+        select * from picture_list where p_l_id=#{pLId}
+    </select>
+
+    <update id="editPictureByPLId" parameterType="PictureList">
+        update picture_list
+        <set>
+            <if test="pLUrl!=null and pLUrl!=''">
+                p_l_url=#{pLUrl},
+            </if>
+            <if test="depict!=null and depict!=''">
+                depict=#{depict}
+            </if>
+        </set>
+        where p_l_id=#{pLId}
+    </update>
+</mapper>

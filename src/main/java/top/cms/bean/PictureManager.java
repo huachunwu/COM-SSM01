@@ -1,6 +1,7 @@
 package top.cms.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 图片管理
@@ -19,6 +20,7 @@ public class PictureManager implements Serializable {
      * 列表应用状态
      */
     private String pState;
+    private List<PictureList> pictureLists;
     public String getpId() {
         return pId;
     }
@@ -41,5 +43,23 @@ public class PictureManager implements Serializable {
 
     public void setpState(String pState) {
         this.pState = pState;
+    }
+
+    public List<PictureList> getPictureLists() {
+        return pictureLists;
+    }
+
+    public void setPictureLists(List<PictureList> pictureLists) {
+        this.pictureLists = pictureLists;
+    }
+
+    @Override
+    public String toString() {
+        return "PictureManager{" +
+                "pId='" + pId + '\'' +
+                ", pName='" + pName + '\'' +
+                ", pState='" + pState + '\'' +
+                ", pictureLists=" + pictureLists +
+                '}';
     }
 }

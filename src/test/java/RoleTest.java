@@ -6,9 +6,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import top.cms.bean.PictureList;
 import top.cms.bean.SysMenu;
 import top.cms.bean.SysRole;
 import top.cms.bean.SysUser;
+import top.cms.dao.PictureListMapper;
+import top.cms.dao.PictureManagerMapper;
 import top.cms.dao.SysRoleMapper;
 import top.cms.service.SysRoleService;
 
@@ -48,4 +51,13 @@ public class RoleTest {
         String s1 = $1$2.replaceAll("\"", "");
         System.out.println(s1);
     }
+
+    @Autowired
+    private PictureListMapper pictureListMapper;
+    @Test
+    public void test5(){
+        PictureList pictureByPLId = pictureListMapper.findPictureByPLId("1");
+        System.out.println(pictureByPLId);
+    }
+
 }

@@ -20,7 +20,7 @@
     <link href="${pageContext.request.contextPath}/zui/lib/datatable/zui.datatable.css" rel="stylesheet">
 </head>
 <body>
-<button type="button" style="color: #ea644a" class="text-right btn btn-primary" id="trigger1"><h4><i class="icon icon-plus-sign"></i>&nbsp;<small>添加</small></h4></button>
+<button type="button" style="color: #ea644a ;margin:2em;" class="text-right btn btn-primary" id="trigger1"><i class="icon icon-plus-sign"></i>&nbsp;<small>添加</small></button>
 <table class="table datatable">
     <thead>
     <tr>
@@ -42,7 +42,7 @@
                 <td><i class="icon icon-remove-circle" style="color: red;"></i></td>
             </c:if>
             <td>
-                <a href="${pageContext.request.contextPath}/pictureManager/editToView.cms"> <i class="icon icon-edit"></i></a> <a href="#"><i class="icon icon-trash"></i></a>
+                <a href="${pageContext.request.contextPath}/pictureManager/editToView.cms?pId=${pictureManager.pId}"> <i class="icon icon-edit"></i></a> <a href="#"><i class="icon icon-trash"></i></a>
             </td>
         </tr>
     </c:forEach>

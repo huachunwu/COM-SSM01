@@ -20,6 +20,7 @@
     <select id="findPictureManagerByPid" parameterType="string" resultMap="pictureManagerResultMap">
         select * from picture_manager where p_id=#{pId}
     </select>
+
     <!--插入数据-->
     <insert id="insertPictureManager" parameterType="PictureManager">
         insert into picture_manager(p_id, p_name, p_state) values (#{pId},#{pName},#{pState})

@@ -3,7 +3,10 @@ package top.cms.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import top.cms.bean.PictureList;
 import top.cms.bean.PictureManager;
+import top.cms.dao.PictureListMapper;
+import top.cms.service.PictureListService;
 import top.cms.service.PictureManagerService;
 import top.cms.utils.UUIDUtils;
 
@@ -20,6 +23,8 @@ public class PictureManagerController {
     @Autowired
     private PictureManagerService pictureManagerService;
 
+    @Autowired
+    private PictureListService pictureListService;
     /**
      * 遍历列表
      * @param map
@@ -45,14 +50,18 @@ public class PictureManagerController {
     @RequestMapping(value = "/addPictureManager.cms")
     public String insertPictureManager(PictureManager pictureManager){
         System.out.println(pictureManager.getpState());
-        pictureManager.setpId(UUIDUtils.uuid());
+        String uuid = UUIDUtils.uuid();
+        pictureManager.setpId(uuid);
         pictureManagerService.insertPictureManager(pictureManager);
-        return "redirect:/pictureManager/listAll.cms";
+        return "redirect:/pictureManager/editToView.cms?pId="+uuid;
     }
     @RequestMapping(value = "/editToView.cms")
     public String findPictureManagerByPid(String pId,Map<String,Object> map){
+        System.out.println(pId);
         PictureManager pictureManagerByPid = pictureManagerService.findPictureManagerByPid(pId);
+        List<PictureList> pictureByPid = pictureListService.findPictureByPid(pId);
+        pictureManagerByPid.setPictureLists(pictureByPid);
         map.put("pictureManager",pictureManagerByPid);
-        return "";
+        return "WEB-INF/jsp/admin/imageManager/pictureAddEdit";
     }
 }
