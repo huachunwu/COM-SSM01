@@ -26,7 +26,6 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 <!-- ZUI Javascript组件 -->
 <script src="${pageContext.request.contextPath}/zui/js/zui.js"></script>
-<script src="${pageContext.request.contextPath}/js/left.js"></script>
 <script>
     $(function () {
         $.ajax({

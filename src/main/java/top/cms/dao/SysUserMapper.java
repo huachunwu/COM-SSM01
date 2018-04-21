@@ -20,4 +20,16 @@ public interface SysUserMapper {
      * @return
      */
     SysUser findSysUserByUsername(String username);
+
+    /**
+     * 用户登录修改
+     * @param sysUser
+     */
+    void updateSysUserSetLoginTimeByUid(SysUser sysUser);
+
+    /**
+     * 用户退出修改
+     * @param sysUser
+     */
+    void updateSysUserSetLastTimeByUid(SysUser sysUser);
 }

@@ -13,4 +13,16 @@ public interface SysUserService {
      * @return 返回查询结果
      */
     public SysUser userLogin(String username);
+
+    /**
+     * 用户登录修改
+     * @param sysUser 传入参数
+     */
+    public  void updateSysUserSetLoginTimeByUid(SysUser sysUser);
+
+    /**
+     * 用户退出修改
+     * @param sysUser
+     */
+    public void updateSysUserSetLastTimeByUid(SysUser sysUser);
 }

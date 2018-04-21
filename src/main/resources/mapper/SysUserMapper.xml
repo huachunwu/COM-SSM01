@@ -17,10 +17,18 @@
         <result property="sign" column="sign" jdbcType="INTEGER"/>
         <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
     </resultMap>
+    <!--废弃方法改用下边这个，用户登录-->
     <select id="findSysUserByUsernameAndPassword" parameterType="SysUser" resultMap="sysUserResult">
-        select uid,username,password,name,sign,role_id from sys_user where username=#{username} AND password=#{password}
+        select uid,username,password,name,sign,role_id,lastTime from sys_user where username=#{username} AND password=#{password}
     </select>
     <select id="findSysUserByUsername" parameterType="string" resultMap="sysUserResult">
-        select uid,username,password,name,sign,role_id from sys_user where username=#{username} and sign=1
+        select uid,username,password,name,sign,role_id,lastTime from sys_user where username=#{username} and sign=1
     </select>
+
+    <update id="updateSysUserSetLoginTimeByUid" parameterType="SysUser">
+        UPDATE sys_user set loginTime=#{loginTime} where uid=#{uid}
+    </update>
+    <update id="updateSysUserSetLastTimeByUid" parameterType="SysUser">
+        UPDATE sys_user set lastTime=#{lastTime} where uid=#{uid}
+    </update>
 </mapper>

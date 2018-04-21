@@ -35,7 +35,7 @@ public class SysRoleServiceImpl implements SysRoleService {
             SysMenu sysMenu=null;
             if ("0".equals(sysAuth1.getAuthFId())){
                 sysMenu=new SysMenu();
-                sysMenu.setHtml("<a href='"+sysAuth1.getAuthUrl()+"'><i class='"+sysAuth1.getAuthIcon()+"'></i>"+sysAuth1.getAuthName()+"</a>");
+                sysMenu.setHtml("<a href='#' fid='"+sysAuth1.getAuthId()+"' aurl='"+sysAuth1.getAuthUrl()+"'><i class='"+sysAuth1.getAuthIcon()+"'></i>"+sysAuth1.getAuthName()+"</a>");
                 sysMenu.setId(sysAuth1.getAuthId());
                 sysMenus.add(sysMenu);
             }
@@ -61,7 +61,7 @@ public class SysRoleServiceImpl implements SysRoleService {
             if (!"0".equals(sysAuth.getAuthFId())){
                 if (sysAuth.getAuthFId().equals(id)){
                     sysMenu=new SysMenu();
-                    sysMenu.setHtml("<a href='"+sysAuth.getAuthUrl()+"'><i class='"+sysAuth.getAuthIcon()+"'></i>"+sysAuth.getAuthName()+"</a>");
+                    sysMenu.setHtml("<a href='#' fid='"+sysAuth.getAuthId()+"' aurl='"+sysAuth.getAuthUrl()+"'><i class='"+sysAuth.getAuthIcon()+"'></i>"+sysAuth.getAuthName()+"</a>");
                     sysMenu.setId(sysAuth.getAuthId());
                     childList.add(sysMenu);
                 }

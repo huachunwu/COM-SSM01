@@ -11,7 +11,9 @@ import top.cms.bean.SysUser;
 import top.cms.dao.SysUserMapper;
 import top.cms.service.SysRoleService;
 import top.cms.service.SysUserService;
+import top.cms.utils.DateToString;
 
+import java.util.Date;
 import java.util.List;
 
 public class CMSRealm extends AuthorizingRealm {
@@ -54,15 +56,19 @@ public class CMSRealm extends AuthorizingRealm {
          */
         String username=passwordToken.getUsername();
         SysUser sysUser = sysUserService.userLogin(username);
+        AuthenticationInfo info=null;
         if (sysUser==null){
             /**
              * 用户名不存在
              */
             System.out.println("用户名不存在");
             return null;
+        }else {
+            sysUser.setLoginTime(DateToString.dateToString(new Date()));
+            sysUserService.updateSysUserSetLoginTimeByUid(sysUser);
+            info=new SimpleAuthenticationInfo(sysUser,sysUser.getPassword(),this.getName());
         }
-        AuthenticationInfo info=new SimpleAuthenticationInfo(sysUser,sysUser.getPassword(),this.getName());
-        System.out.println(info);
         return info;
+
     }
 }

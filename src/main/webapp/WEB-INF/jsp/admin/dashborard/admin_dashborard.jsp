@@ -20,7 +20,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1>上次登录时间&nbsp;<small class="label label-danger">2018/04/19</small></h1>
+        <h1>上次登录时间&nbsp;<small class="label label-danger">${SysUser.lastTime}</small></h1>
     </div>
     <div class="row" style="padding-top: 1em">
         <div class="col-sm-3 text-center">
@@ -43,7 +43,7 @@
             </a>
         </div>
         <div class="col-sm-3 text-center">
-            <a class="card" href="#" style="background-color: #03b8cf">
+            <a class="card" href="http://www.baidu.com" style="background-color: #03b8cf">
                 <div class="row">
                     <i class="icon icon-group icon-5x col-sm-5"  style="color: #ffffff;margin-top: 5px"></i>
                     <div class="col-sm-7">

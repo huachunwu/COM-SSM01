@@ -18,4 +18,14 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUser userLogin(String username) {
         return userMapper.findSysUserByUsername(username);
     }
+
+    @Override
+    public void updateSysUserSetLoginTimeByUid(SysUser sysUser) {
+        userMapper.updateSysUserSetLoginTimeByUid(sysUser);
+    }
+
+    @Override
+    public void updateSysUserSetLastTimeByUid(SysUser sysUser) {
+        userMapper.updateSysUserSetLastTimeByUid(sysUser);
+    }
 }
