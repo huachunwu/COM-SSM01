@@ -23,7 +23,7 @@
 <div class="container" style="padding-top: 2em">
         <p class="with-padding bg-default row"><h1>图片轮播图列表修改</h1></p>
     <div class="row">
-        <form action="${pageContext.request.contextPath}/pictureManager/addPictureManager.cms" method="post">
+        <form action="${pageContext.request.contextPath}/pictureManager/editPictureManager.cms" method="post">
             <input type="hidden" name="pId" value="${pictureManager.pId}">
             <div class="input-control has-icon-left">
                 <input id="pName" type="text" class="form-control" placeholder="列表名" name="pName" value="${pictureManager.pName}">
@@ -67,7 +67,7 @@
                             <a href="${pageContext.request.contextPath}/pictureList/findPictureByPLId.cms?pLId=${picture.pLId}">
                                 <i class="icon-heart"></i> 修改
                             </a>
-                            <div class="pull-right text-danger"><a href="${pageContext.request.contextPath}/pictureManager/pLid=${picture.pLId}"><i class="icon-heart-empty"></i>删除</a> </div>
+                            <div class="pull-right text-danger"><a href="${pageContext.request.contextPath}/pictureList/deletePictureListByPLId.cms?pLId=${picture.pLId}" class="deletes"><i class="icon-heart-empty"></i>删除</a> </div>
                         </div>
                     </div>
                 </div>
@@ -80,4 +80,13 @@
 </div>
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 <script src="${pageContext.request.contextPath}/zui/js/zui.js"></script>
+<script>
+    $(".deletes").on("click",function () {
+        if (confirm("你确定要删除吗")) {
+            return true;
+        }else {
+            return false;
+        }
+    });
+</script>
 </body>

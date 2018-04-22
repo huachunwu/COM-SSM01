@@ -2,7 +2,9 @@ package top.cms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.cms.bean.PictureList;
 import top.cms.bean.PictureManager;
+import top.cms.dao.PictureListMapper;
 import top.cms.dao.PictureManagerMapper;
 import top.cms.service.PictureManagerService;
 
@@ -16,6 +18,8 @@ import java.util.List;
 public class PictureManagerServiceImpl implements PictureManagerService {
     @Autowired
     private PictureManagerMapper pictureManagerMapper;
+    @Autowired
+    private PictureListMapper pictureListMapper;
     @Override
     public List<PictureManager> findPictureManager() {
         return pictureManagerMapper.findPictureManager();
@@ -50,5 +54,26 @@ public class PictureManagerServiceImpl implements PictureManagerService {
     @Override
     public PictureManager findPictureManagerByPid(String pId) {
         return pictureManagerMapper.findPictureManagerByPid(pId);
+    }
+
+    @Override
+    public void editPictureManager(PictureManager pictureManager) {
+      if (pictureManager.getpState().equals("1")){
+          pictureManagerMapper.updatePictureManagerAllPState();
+          pictureManagerMapper.editPictureManager(pictureManager);
+      }else {
+          pictureManagerMapper.editPictureManager(pictureManager);
+      }
+    }
+
+    @Override
+    public void deletePictureManagerByPId(String pId) {
+        List<PictureList> pictureByPid = pictureListMapper.findPictureByPid(pId);
+        if (pictureByPid==null){
+            pictureManagerMapper.deletePictureManagerByPId(pId);
+        }else {
+            pictureListMapper.deletePictureListByPId(pId);
+            pictureManagerMapper.deletePictureManagerByPId(pId);
+        }
     }
 }

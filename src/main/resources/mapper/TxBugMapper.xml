@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.cms.dao.TxBugMapper">
+    <resultMap id="txBugResultMap" type="TxBug">
+        <id property="txId" column="tx_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="txCreatetime" column="tx_createtime"/>
+        <result property="questionType" column="questionType"/>
+        <result property="questionDescribe" column="questionDescribe"/>
+        <result property="questionSpeed" column="questionSpeed"/>
+        <result property="solution" column="Solution"/>
+        <association property="sysUser" javaType="SysUser">
+            <id property="uid" column="uid"/>
+            <result property="name" column="name"/>
+            <result property="address" column="address"/>
+        </association>
+    </resultMap>
+    <select id="txBugAll" resultMap="txBugResultMap">
+        select t.tx_id,t.tx_createtime,t.questionType,t.questionSpeed,t.questionDescribe,u.name,u.address
+         from tx_bug t,sys_user u
+         where t.user_id=u.uid
+    </select>
+</mapper>

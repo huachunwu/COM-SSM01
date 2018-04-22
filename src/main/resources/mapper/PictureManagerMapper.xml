@@ -29,4 +29,11 @@
     <update id="updatePictureManagerAllPState" >
         update picture_manager  set p_state=null
     </update>
+
+    <update id="editPictureManager" parameterType="PictureManager">
+        UPDATE picture_manager set p_name=#{pName},p_state=#{pState} where p_id=#{pId}
+    </update>
+    <delete id="deletePictureManagerByPId" parameterType="string">
+        delete from picture_manager where p_id=#{pId}
+    </delete>
 </mapper>

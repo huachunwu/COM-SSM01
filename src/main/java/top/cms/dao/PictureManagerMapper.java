@@ -39,4 +39,16 @@ public interface PictureManagerMapper {
      * @return
      */
     PictureManager findPictureManagerByPid(String pId);
+
+    /**
+     * 根据Id修改数据
+     * @param pictureManager
+     */
+    void editPictureManager(PictureManager pictureManager);
+
+    /**
+     * 根据PId删除
+     * @param pId
+     */
+    void deletePictureManagerByPId(String pId);
 }

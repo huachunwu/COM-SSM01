@@ -14,6 +14,7 @@
         <result property="sex" column="sex" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="sign" column="sign" jdbcType="INTEGER"/>
         <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
     </resultMap>

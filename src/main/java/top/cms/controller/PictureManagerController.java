@@ -55,6 +55,13 @@ public class PictureManagerController {
         pictureManagerService.insertPictureManager(pictureManager);
         return "redirect:/pictureManager/editToView.cms?pId="+uuid;
     }
+
+    /**
+     * 跳转到轮播图列表修改页面
+     * @param pId
+     * @param map
+     * @return
+     */
     @RequestMapping(value = "/editToView.cms")
     public String findPictureManagerByPid(String pId,Map<String,Object> map){
         System.out.println(pId);
@@ -63,5 +70,26 @@ public class PictureManagerController {
         pictureManagerByPid.setPictureLists(pictureByPid);
         map.put("pictureManager",pictureManagerByPid);
         return "WEB-INF/jsp/admin/imageManager/pictureAddEdit";
+    }
+
+    /**
+     * 列表修改
+     * @param pictureManager
+     * @return
+     */
+    @RequestMapping(value = "/editPictureManager.cms")
+    public String editPictureManager(PictureManager pictureManager){
+        if (pictureManager.getpName()!=null&pictureManager.getpName()!=""){
+
+               pictureManagerService.editPictureManager(pictureManager);
+        }else{
+            System.out.println("数据里有空值");
+        }
+        return "redirect:/pictureManager/editToView.cms?pId="+pictureManager.getpId();
+    }
+    @RequestMapping(value = "deletePictureManagerByPId.cms")
+    public String deletePictureManagerByPId(String pId){
+        pictureManagerService.deletePictureManagerByPId(pId);
+        return "redirect:/pictureManager/listAll.cms";
     }
 }

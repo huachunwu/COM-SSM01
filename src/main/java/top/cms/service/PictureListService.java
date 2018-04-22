@@ -34,4 +34,16 @@ public interface PictureListService {
      * @param pictureList
      */
     void editPictureByPLId(PictureList pictureList);
+
+    /**
+     * 根据pLid删除
+     * @param pLId
+     */
+    void deletePictureListByPLId(String pLId);
+
+    /**
+     * 根据pId删除
+     * @param pId
+     */
+    void deletePictureListByPId(String pId);
 }

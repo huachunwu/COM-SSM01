@@ -32,4 +32,11 @@
         </set>
         where p_l_id=#{pLId}
     </update>
+
+    <delete id="deletePictureListByPLId" parameterType="string">
+        delete from picture_list where p_l_id=#{pLId}
+    </delete>
+    <delete id="deletePictureListByPId" parameterType="string">
+        delete from picture_list where p_id=#{pId}
+    </delete>
 </mapper>

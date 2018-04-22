@@ -34,4 +34,16 @@ public interface PictureListMapper {
      * @param pictureList
      */
     void editPictureByPLId(PictureList pictureList);
+
+    /**
+     * 根据pLId删除列表项
+     * @param pLId
+     */
+    void deletePictureListByPLId(String pLId);
+
+    /**
+     * 根据PId删除
+     * @param pId
+     */
+    void deletePictureListByPId(String pId);
 }

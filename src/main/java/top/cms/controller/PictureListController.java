@@ -8,7 +8,6 @@ import top.cms.bean.PictureList;
 import top.cms.service.PictureListService;
 import top.cms.utils.UUIDUtils;
 
-import javax.jms.Session;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +83,14 @@ public class PictureListController {
         return "WEB-INF/jsp/admin/imageManager/pictureListEditView";
     }
 
+    /**
+     * 文件修改和图片修改上传
+     * @param file
+     * @param pictureList
+     * @param map
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/editPictureByPLId.cms")
     public String editPictureByPLId(MultipartFile file, PictureList pictureList, Map<String, Object> map, HttpSession session){
         if (!file.isEmpty()){
@@ -106,5 +113,11 @@ public class PictureListController {
         pictureListService.editPictureByPLId(pictureList);
         return "redirect:/pictureManager/editToView.cms?pId="+pictureList.getpId();
     }
-
+    @RequestMapping(value = "/deletePictureListByPLId.cms")
+    public String deletePictureListByPLId(String pLId){
+        if (!pLId.isEmpty()&&pLId!=null){
+            pictureListService.deletePictureListByPLId(pLId);
+        }
+        return "redirect:/pictureManager/listAll.cms";
+    }
 }

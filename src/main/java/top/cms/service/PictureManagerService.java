@@ -34,4 +34,15 @@ public interface PictureManagerService {
      * @return
      */
     public PictureManager findPictureManagerByPid(String pId);
+    /**
+     * 根据Id修改数据
+     * @param pictureManager
+     */
+    void editPictureManager(PictureManager pictureManager);
+
+    /**
+     * 根据id删除类列表
+     * @param pId
+     */
+    void deletePictureManagerByPId(String pId);
 }

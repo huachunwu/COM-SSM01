@@ -35,4 +35,15 @@ public class PictureListServiceImpl implements PictureListService {
     public void editPictureByPLId(PictureList pictureList) {
         pictureListMapper.editPictureByPLId(pictureList);
     }
+
+    @Override
+    public void deletePictureListByPLId(String pLId) {
+        pictureListMapper.deletePictureListByPLId(pLId);
+    }
+
+    @Override
+    public void deletePictureListByPId(String pId) {
+        /*TODO 根据Pid删除*/
+        pictureListMapper.deletePictureListByPId(pId);
+    }
 }

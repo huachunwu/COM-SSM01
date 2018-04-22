@@ -50,6 +50,7 @@ public class SysUser implements Serializable {
     /**
      * 用户状态
      */
+    private String address;
     private Integer sign;
     /**
      * 关联角色表id
@@ -152,6 +153,14 @@ public class SysUser implements Serializable {
         this.roleId = roleId;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     /**
      * 重写的toString方法
      * @return
@@ -169,6 +178,7 @@ public class SysUser implements Serializable {
                 ", sex=" + sex +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
                 ", sign=" + sign +
                 ", roleId='" + roleId + '\'' +
                 '}';

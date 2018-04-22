@@ -42,7 +42,7 @@
                 <td><i class="icon icon-remove-circle" style="color: red;"></i></td>
             </c:if>
             <td>
-                <a href="${pageContext.request.contextPath}/pictureManager/editToView.cms?pId=${pictureManager.pId}"> <i class="icon icon-edit"></i></a> <a href="#"><i class="icon icon-trash"></i></a>
+                <a href="${pageContext.request.contextPath}/pictureManager/editToView.cms?pId=${pictureManager.pId}"> <i class="icon icon-edit"></i></a> <a href="${pageContext.request.contextPath}/pictureManager/deletePictureManagerByPId.cms?pId=${pictureManager.pId}" class="deleteByPId"><i class="icon icon-trash"></i></a>
             </td>
         </tr>
     </c:forEach>
@@ -52,8 +52,16 @@
 <script src="${pageContext.request.contextPath}/zui/js/zui.js"></script>
 <script src="${pageContext.request.contextPath}/zui/lib/datatable/zui.datatable.js"></script>
 <script>
+    $('table.datatable').datatable();
     $("#trigger1").on("click",function () {
         window.location.href = "${pageContext.request.contextPath}/pictureManager/addPictureManagerToView.cms";
+    })
+    $(".deleteByPId").on("click",function () {
+        if (confirm("你确定要删除本列表吗？")){
+            return true;
+        } else {
+            return false;
+        }
     })
 </script>
 </body>
