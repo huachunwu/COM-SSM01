@@ -1,6 +1,7 @@
 package top.cms.controller;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,9 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import top.cms.bean.SysUser;
 import top.cms.service.SysUserService;
+import top.cms.utils.DateToString;
+import top.cms.utils.UUIDUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户操作Controller
@@ -23,6 +30,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping(value = "sysUser")
 public class SysUserController {
+    Logger logger= Logger.getLogger(SysUserController.class);
     @Autowired
     private SysUserService sysUserService;
 
@@ -81,5 +89,70 @@ public class SysUserController {
         sysUserService.updateSysUserSetLastTimeByUid(sysUser);
         subject.logout();
         return "redirect:/index.jsp";
+    }
+
+    /**
+     * 遍历用户列表
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/findAll.cms")
+    public String findSysUserAll(Map<String,Object> map){
+        List<SysUser> sysUserAll = sysUserService.findSysUserAll();
+        map.put("sysUserAll",sysUserAll);
+        return "WEB-INF/jsp/admin/SysUsers/SysUserManager";
+    }
+
+    /**
+     * 跳转到修改页面
+     * @param uId
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/findSysUserByUid.cms")
+    public String findSysUserByUid(String uId,Map<String,Object> map){
+        SysUser sysUserByUid = sysUserService.findSysUserByUid(uId);
+        map.put("sysUserByUid",sysUserByUid);
+        return "WEB-INF/jsp/admin/SysUsers/SysUserToView";
+    }
+
+    /**
+     * 修改用户信息
+     * @param sysUser
+     * @return
+     */
+    @RequestMapping(value = "/updateSysUser.cms")
+    public String updateSysUser(SysUser sysUser){
+        System.out.println(sysUser);
+        sysUserService.updateSysUser(sysUser);
+        return "redirect:/sysUser/findAll.cms";
+    }
+
+    /**
+     * 根据id删除用户
+     * @param uId
+     * @return
+     */
+    @RequestMapping(value = "/delSysUserByUid.cms")
+    public String delSysUserByUid(String uId){
+        sysUserService.delSysUserByUid(uId);
+        return "redirect:/sysUser/findAll.cms";
+    }
+
+    /**
+     * 跳到添加页面
+     * @return
+     */
+    @RequestMapping(value = "/toAdd.cms")
+    public String toAdd(){
+        return "WEB-INF/jsp/admin/SysUsers/SysUserAdd";
+    }
+
+    @RequestMapping(value = "/addSysUser.cms")
+    public String addSysUser(SysUser sysUser){
+        sysUser.setUid(UUIDUtils.uuid());
+        sysUser.setCreateTime(DateToString.dateToString(new Date()));
+        sysUserService.addSysUser(sysUser);
+        return "redirect:/sysUser/findAll.cms";
     }
 }

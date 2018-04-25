@@ -1,8 +1,10 @@
 package top.cms.controller;
 
+import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import top.cms.utils.DateToString;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 
 
@@ -19,9 +22,12 @@ import java.util.Random;
  */
 @Controller
 public class CheckImageController {
+    Logger logger= Logger.getLogger(CheckImageController.class);
     @RequiresGuest
     @RequestMapping(value = "CheckImage.cms")
     public void checkImage(HttpSession session, HttpServletResponse response) throws IOException {
+        Date start=new Date();
+        logger.info(DateToString.dateToString(start) +"验证码开始生成");
         Random random=new Random();
         /**
          * 字体宽度
@@ -92,6 +98,9 @@ public class CheckImageController {
         }
         session.setAttribute("piccode",str2.toString().toLowerCase());
         ImageIO.write(bufferedImage,"JPG",response.getOutputStream());
-        System.out.println(str2.toString().toLowerCase());
+        Date end=new Date();
+        logger.info(DateToString.dateToString(end) +"验证码生成结束，验证码是："+str2.toString().toLowerCase());
+        long l=end.getTime() - start.getTime();
+        logger.info("用时："+l+"ms");
     }
 }

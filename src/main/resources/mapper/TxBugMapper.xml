@@ -15,11 +15,45 @@
             <id property="uid" column="uid"/>
             <result property="name" column="name"/>
             <result property="address" column="address"/>
+            <result property="telephone" column="telephone"/>
         </association>
     </resultMap>
-    <select id="txBugAll" resultMap="txBugResultMap">
-        select t.tx_id,t.tx_createtime,t.questionType,t.questionSpeed,t.questionDescribe,u.name,u.address
+    <select id="findTxBugAll" resultMap="txBugResultMap" parameterType="top.cms.utils.PageBean">
+        select t.tx_id,t.tx_createtime,t.questionType,t.questionSpeed,t.questionDescribe,u.name,u.address,u.telephone
+         from tx_bug t,sys_user u
+         where t.user_id=u.uid limit #{startSize},#{pageSize}
+    </select>
+    <select id="findTxBugCount" resultType="int">
+        select count(*) from sys_user u,tx_bug tx WHERE tx.user_id=u.uid
+    </select>
+    <select id="findTxBugByPams" parameterType="TxBug" resultMap="txBugResultMap">
+         select t.tx_id,t.tx_createtime,t.questionType,t.questionSpeed,t.questionDescribe,u.name,u.address,u.telephone
          from tx_bug t,sys_user u
          where t.user_id=u.uid
+        <if test="sysUser.name!=null and sysUser.name!=''">
+            and u.name=#{sysUser.name}
+        </if>
+        <if test="questionSpeed!=null and questionSpeed!=''">
+            and t.questionSpeed=#{questionSpeed}
+        </if>
+        <if test="sysUser.address!=null and sysUser.address!=''">
+            and u.address like #{sysUser.address}
+        </if>
+    </select>
+    <select id="findTxBugByTxId" parameterType="string" resultMap="txBugResultMap">
+        select t.tx_id,t.tx_createtime,t.questionType,t.questionSpeed,t.questionDescribe,u.name,u.address,u.telephone
+         from tx_bug t,sys_user u
+         where t.user_id=u.uid and t.tx_id=#{txId}
+    </select>
+    <update id="editTxBugByTxId" parameterType="TxBug">
+        update tx_bug set questionSpeed=#{questionSpeed},Solution=#{solution} where tx_id=#{txId}
+    </update>
+    <select id="findTxBugCount2" resultType="int">
+        select count(*) from tx_bug
+    </select>
+    <select id="findTxBugNew" resultMap="txBugResultMap">
+        select t.tx_id,t.tx_createtime,t.questionType,t.questionSpeed,t.questionDescribe,u.name,u.address,u.telephone
+         from tx_bug t,sys_user u
+         where t.user_id=u.uid order by t.tx_createtime desc limit 0,5
     </select>
 </mapper>

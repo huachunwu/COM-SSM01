@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,12 +25,12 @@
     </div>
     <div class="row" style="padding-top: 1em">
         <div class="col-sm-3 text-center">
-            <a class="card" href="#" style="background-color: #3280fc">
+            <a class="card" href="${pageContext.request.contextPath}/pictureManager/listAll.cms" style="background-color: #3280fc">
                 <div class="row">
-                    <i class="icon icon-comments icon-5x col-sm-5" style="color: #ffffff;margin-top: 5px"></i>
+                    <i class="icon icon-file-image icon-5x col-sm-5" style="color: #ffffff;margin-top: 5px"></i>
                     <div class="col-sm-7">
                         <div class="row">
-                            <h1  style="color: #ffffff">22</h1>
+                            <h1  style="color: #ffffff">${pictureManagercount}</h1>
                         </div>
                         <div class="row">
                             <small  style="color: #ffffff">新的消息</small>
@@ -43,12 +44,12 @@
             </a>
         </div>
         <div class="col-sm-3 text-center">
-            <a class="card" href="http://www.baidu.com" style="background-color: #03b8cf">
+            <a class="card" href="${pageContext.request.contextPath}/sysUser/findAll.cms" style="background-color: #03b8cf">
                 <div class="row">
                     <i class="icon icon-group icon-5x col-sm-5"  style="color: #ffffff;margin-top: 5px"></i>
                     <div class="col-sm-7">
                         <div class="row">
-                            <h1  style="color: #ffffff">22</h1>
+                            <h1  style="color: #ffffff">${sysUserCount}</h1>
                         </div>
                         <div class="row">
                             <small  style="color: #ffffff">新的消息</small>
@@ -62,12 +63,12 @@
             </a>
         </div>
         <div class="col-sm-3 text-center">
-            <a class="card" href="#" style="background-color: #38b03f">
+            <a class="card" href="${pageContext.request.contextPath}/wirter/findWirterAll.cms" style="background-color: #38b03f">
                 <div class="row">
                     <i class="icon icon-paste icon-5x col-sm-5"  style="color: #ffffff;margin-top: 5px"></i>
                     <div class="col-sm-7">
                         <div class="row">
-                            <h1  style="color: #ffffff">22</h1>
+                            <h1  style="color: #ffffff">${wirterCount}</h1>
                         </div>
                         <div class="row">
                             <small  style="color: #ffffff">新的消息</small>
@@ -81,12 +82,12 @@
             </a>
         </div>
         <div class="col-sm-3 text-center">
-            <a class="card" href="#" style="background-color: #ea644a">
+            <a class="card" href="${pageContext.request.contextPath}/txBug/findAll.cms" style="background-color: #ea644a">
                 <div class="row">
                     <i class="icon icon-bug icon-5x col-sm-5"  style="color: #ffffff;margin-top: 5px"></i>
                     <div class="col-sm-7">
                         <div class="row">
-                            <h1  style="color: #ffffff">22</h1>
+                            <h1  style="color: #ffffff">${txBugCount}</h1>
                         </div>
                         <div class="row">
                             <small  style="color: #ffffff">新的消息</small>
@@ -108,7 +109,9 @@
                     <span class="title"> 公告信息</span>
                 </div>
                 <div class="panel-body">
-                    <p>最新公告</p>
+                   <c:forEach items="${wirterAllByRoleId}" var="wirter">
+                    <p>${wirter.text}</p>
+                   </c:forEach>
                 </div>
             </div>
         </div>
@@ -120,11 +123,9 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
+                        <c:forEach items="${txBugNew}" var="txbug" varStatus="i">
+                        <li class="list-group-item">${txbug.questionDescribe}&nbsp;<span class="label label-danger"></span> </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>
@@ -137,11 +138,9 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
-                        <li class="list-group-item">标题&nbsp;<span class="label label-danger">new</span> </li>
+                        <c:forEach items="${wirterAllNew}" var="wirter" varStatus="i">
+                            <li class="list-group-item">${wirter.title}&nbsp;<span class="label label-danger">${i.count}</span> </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>

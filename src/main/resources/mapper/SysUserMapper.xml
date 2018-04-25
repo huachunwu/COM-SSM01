@@ -7,6 +7,7 @@
         <id property="uid" column="uid" jdbcType="INTEGER"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
         <result property="createTime" column="createTime" jdbcType="VARCHAR"/>
         <result property="lastTime" column="lastTime" jdbcType="VARCHAR"/>
         <result property="loginTime" column="loginTime" jdbcType="VARCHAR"/>
@@ -18,6 +19,26 @@
         <result property="sign" column="sign" jdbcType="INTEGER"/>
         <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap id="sysUserResultRole" type="SysUser">
+        <id property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="createTime" column="createTime" jdbcType="VARCHAR"/>
+        <result property="lastTime" column="lastTime" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="loginTime" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="sign" column="sign" jdbcType="INTEGER"/>
+        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+        <association property="sysRole" javaType="SysRole">
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+        </association>
+    </resultMap>
     <!--废弃方法改用下边这个，用户登录-->
     <select id="findSysUserByUsernameAndPassword" parameterType="SysUser" resultMap="sysUserResult">
         select uid,username,password,name,sign,role_id,lastTime from sys_user where username=#{username} AND password=#{password}
@@ -25,11 +46,33 @@
     <select id="findSysUserByUsername" parameterType="string" resultMap="sysUserResult">
         select uid,username,password,name,sign,role_id,lastTime from sys_user where username=#{username} and sign=1
     </select>
+    <select id="findSysUserAll" resultMap="sysUserResultRole">
+        select u.uid,u.username,u.telephone,u.name,u.sign,r.role_name from sys_user u,sys_role r where u.role_id=r.role_id
+    </select>
 
+    <select id="findSysUserByUid" resultMap="sysUserResultRole" parameterType="string">
+        select u.uid,u.username,u.telephone,u.birthday,u.sex,u.name,u.email,u.address,u.sign,u.role_id,r.role_name from sys_user u,sys_role r where u.role_id=r.role_id and u.uid=#{uId}
+    </select>
     <update id="updateSysUserSetLoginTimeByUid" parameterType="SysUser">
         UPDATE sys_user set loginTime=#{loginTime} where uid=#{uid}
     </update>
     <update id="updateSysUserSetLastTimeByUid" parameterType="SysUser">
         UPDATE sys_user set lastTime=#{lastTime} where uid=#{uid}
     </update>
+    <update id="updateSysUser" parameterType="SysUser">
+        update sys_user set username=#{username},telephone=#{telephone},birthday=#{birthday},sex=#{sex},name=#{name},email=#{email},address=#{address},sign=#{sign},role_id=#{roleId} where uid=#{uid}
+    </update>
+    <delete id="delSysUserByUid" parameterType="string">
+        delete from sys_user where uid=#{uid}
+    </delete>
+    <insert id="addSysUser" parameterType="SysUser">
+        insert into sys_user(uid, username, password, telephone, createTime, birthday, sex, name, email, address, sign, role_id) values (#{uid},#{username},#{password},#{telephone},#{createTime},#{birthday},#{sex},#{name},#{email},#{address},#{sign},#{roleId})
+    </insert>
+
+    <select id="findSysUserByUsernameA" parameterType="string" resultMap="sysUserResult">
+        select * from sys_user where username=#{username}
+    </select>
+    <select id="findSysUserCount" resultType="int">
+        select count(*) from sys_user
+    </select>
 </mapper>

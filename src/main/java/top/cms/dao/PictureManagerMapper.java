@@ -51,4 +51,10 @@ public interface PictureManagerMapper {
      * @param pId
      */
     void deletePictureManagerByPId(String pId);
+
+    /**
+     * 统计总条数
+     * @return
+     */
+    int pictureManagercount();
 }

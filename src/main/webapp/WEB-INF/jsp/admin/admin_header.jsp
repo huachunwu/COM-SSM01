@@ -48,14 +48,10 @@
             </ul>
             <!-- 右侧的导航项目 -->
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="your/nice/url"><i class="icon icon-question"></i>&nbsp;&nbsp;帮助</a></li>
-                <li><a href="#"><i class="icon icon-chat-dot"></i> 未处理业务&nbsp;&nbsp;<span class="label label-badge label-info">Default</span></a> </li>
-                <li><a href="#"><i class="icon icon-chat-line"></i> 待审核信息&nbsp;&nbsp;<span class="label label-badge label-warning">Default</span></a> </li>
                 <li class="dropdown">
-                    <a href="your/nice/url" class="dropdown-toggle" data-toggle="dropdown">${SysUser.name}<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">${SysUser.name}<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="your/nice/url"><i class="icon icon-user"></i> 个人信息</a></li>
-                        <li><a href="your/nice/url"><i class="icon icon-edit-sign"></i> 修改密码</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon icon-edit-sign"></i> 修改密码</a></li>
                         <li class="divider"></li>
                         <li><a href="sysUser/logOut.cms" id="logOut"><i class="icon icon-signout"></i> 用户注销</a></li>
                     </ul>
@@ -64,10 +60,54 @@
         </div><!-- END .navbar-collapse -->
     </div>
 </nav>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+               <form action="#" id="update" method="post">
+                   <div class="input-control has-icon-right">
+                       <input id="password" type="text" class="form-control" placeholder="密码">
+                       <label for="password" class="input-control-icon-right"><i class="icon icon-key"></i></label>
+                   </div>
+                   <div class="input-control has-icon-right">
+                       <input id="rpassword" type="text" class="form-control" placeholder="确认密码">
+                       <label for="rpassword" class="input-control-icon-right"><i class="icon icon-key"></i></label>
+                   </div>
+                   <span id="s"></span>
+               </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- jQuery (ZUI中的Javascript组件依赖于jQuery) -->
 <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
 <!-- ZUI Javascript组件 -->
 <script src="${pageContext.request.contextPath}/zui/js/zui.js"></script>
 <script src="${pageContext.request.contextPath}/js/header.js"></script>
+<script>
+    $("#save").on("click",function () {
+        var password=$("#password").val();
+        var rpassword=$("#rpassword").val();
+        if (password!=null){
+            if (password==rpassword){
+                $('#myModal').modal('toggle', 'center')
+                $("#close").button();
+            }else {
+                $("#s").append("两次输入的密码不相等");
+            }
+        } else {
+            $("#s").append("输入的密码为空");
+        }
+    });
+</script>
 </body>
 </html>

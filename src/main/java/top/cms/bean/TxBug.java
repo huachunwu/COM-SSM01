@@ -1,10 +1,12 @@
 package top.cms.bean;
 
+import java.io.Serializable;
+
 /**
  * 事务提交
  * @author yhmi
  */
-public class TxBug {
+public class TxBug implements Serializable {
     /**
      * 事务id
      */

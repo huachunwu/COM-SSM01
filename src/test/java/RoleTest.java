@@ -6,14 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import top.cms.bean.PictureList;
-import top.cms.bean.SysMenu;
-import top.cms.bean.SysRole;
-import top.cms.bean.SysUser;
-import top.cms.dao.PictureListMapper;
-import top.cms.dao.PictureManagerMapper;
-import top.cms.dao.SysRoleMapper;
+import top.cms.bean.*;
+import top.cms.dao.*;
 import top.cms.service.SysRoleService;
+import top.cms.utils.PageBean;
 
 import javax.management.relation.Role;
 import javax.servlet.http.HttpSession;
@@ -58,6 +54,32 @@ public class RoleTest {
     public void test5(){
         PictureList pictureByPLId = pictureListMapper.findPictureByPLId("1");
         System.out.println(pictureByPLId);
+    }
+
+    @Autowired
+    private TxBugMapper txBugMapper;
+    @Test
+    public void test6(){
+        PageBean<TxBug> pageBean=new PageBean<TxBug>();
+        pageBean.setStartSize(0);
+        pageBean.setStartSize(2);
+
+        List<TxBug> txBugAll = txBugMapper.findTxBugAll(pageBean);
+        System.out.println(txBugAll);
+
+    }
+    @Test
+    public void test7(){
+        int txBugCount = txBugMapper.findTxBugCount();
+        System.out.println(txBugCount);
+
+    }
+    @Autowired
+    private WirterMapper wirterMapper;
+    @Test
+    public void test8(){
+        List<Wirter> wirterAll = wirterMapper.findWirterAll();
+        System.out.println(wirterAll);
     }
 
 }

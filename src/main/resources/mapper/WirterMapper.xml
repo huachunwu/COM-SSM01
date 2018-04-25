@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.cms.dao.WirterMapper">
+   <resultMap id="wirterResultMap" type="Wirter">
+       <id property="wId" column="w_id"/>
+       <result property="uId" column="u_id"/>
+       <result property="title" column="title"/>
+       <result property="text" column="text"/>
+       <result property="wTypeId" column="w_type_id"/>
+       <result property="wSign" column="w_sign"/>
+       <association property="sysUser" javaType="SysUser">
+           <id property="uid" column="u_id"/>
+           <result property="name" column="name"/>
+       </association>
+       <association property="wtype" javaType="Wtype">
+           <id property="wTypeId" column="w_type_id"/>
+           <result property="wTypeName" column="w_type_name"/>
+       </association>
+   </resultMap>
+    <select id="findWirterAll" resultMap="wirterResultMap">
+        select * from sys_user u,w_type t,w_wirter w where w.w_type_id=t.w_type_id and w.u_id=u.uid
+    </select>
+    <select id="findWirterById" resultMap="wirterResultMap" parameterType="string">
+        select * from sys_user u,w_type t,w_wirter w where w.w_type_id=t.w_type_id and w.u_id=u.uid and w.w_id=#{wId}
+    </select>
+
+    <update id="updateWirterById" parameterType="Wirter">
+        UPDATE w_wirter set w_type_id=#{wTypeId}
+        ,title=#{title}
+            ,text=#{text}
+        ,w_sign=#{wSign}
+        where w_id=#{wId}
+    </update>
+
+    <insert id="addWirter" parameterType="Wirter">
+        insert into w_wirter(w_id, u_id, title, text, w_type_id, w_sign) values (#{wId},#{uId},#{title},#{text},#{wTypeId},#{wSign})
+    </insert>
+    <delete id="delWirter" parameterType="string">
+        delete from w_wirter where w_id=#{wId}
+    </delete>
+    <select id="findWirterCount" resultType="int">
+        select count(*) from w_wirter
+    </select>
+
+    <select id="findWirterAllByRoleId" resultMap="wirterResultMap">
+        select * from sys_user u,w_type t,w_wirter w where w.w_type_id=t.w_type_id and w.u_id=u.uid and w.w_type_id="1"
+    </select>
+    <select id="findWirterAllNew" resultMap="wirterResultMap">
+        select * from sys_user u,w_type t,w_wirter w where w.w_type_id=t.w_type_id and w.u_id=u.uid order by w.title limit 0,5
+    </select>
+</mapper>

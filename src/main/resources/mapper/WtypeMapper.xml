@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.cms.dao.WtypeMapper">
+    <resultMap id="wTypeResultMap" type="Wtype">
+        <id property="wTypeId" column="w_type_id"/>
+        <result property="wTypeName" column="w_type_name"/>
+    </resultMap>
+    <select id="findWtypeAll" resultMap="wTypeResultMap">
+        select * from w_type
+    </select>
+    <select id="findWtypeBywtypeId" parameterType="string" resultMap="wTypeResultMap">
+        select * from w_type where w_type_id=#{wTypeId}
+    </select>
+    <update id="editWtypebyId" parameterType="Wtype">
+        update w_type set w_type_name=#{wTypeName} where w_type_id=#{wTypeId}
+    </update>
+    <insert id="addWtype" parameterType="Wtype">
+        insert into w_type (w_type_id, w_type_name) values (#{wTypeId},#{wTypeName});
+    </insert>
+    <delete id="delWtypeById" parameterType="string">
+        delete from w_type where w_type_id=#{wTypeId}
+    </delete>
+</mapper>

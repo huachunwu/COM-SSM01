@@ -19,6 +19,8 @@ public class SysUser implements Serializable {
      * 用户密码
      */
     private String password;
+
+    private String telephone;
     /**
      * 用户创建时间
      */
@@ -56,6 +58,7 @@ public class SysUser implements Serializable {
      * 关联角色表id
      */
     private String roleId;
+    private SysRole sysRole;
 
     public String getUid() {
         return uid;
@@ -79,6 +82,14 @@ public class SysUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getCreateTime() {
@@ -137,6 +148,14 @@ public class SysUser implements Serializable {
         this.email = email;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Integer getSign() {
         return sign;
     }
@@ -153,24 +172,21 @@ public class SysUser implements Serializable {
         this.roleId = roleId;
     }
 
-    public String getAddress() {
-        return address;
+    public SysRole getSysRole() {
+        return sysRole;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setSysRole(SysRole sysRole) {
+        this.sysRole = sysRole;
     }
 
-    /**
-     * 重写的toString方法
-     * @return
-     */
     @Override
     public String toString() {
         return "SysUser{" +
                 "uid='" + uid + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", telephone='" + telephone + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", lastTime='" + lastTime + '\'' +
                 ", loginTime='" + loginTime + '\'' +
@@ -181,6 +197,7 @@ public class SysUser implements Serializable {
                 ", address='" + address + '\'' +
                 ", sign=" + sign +
                 ", roleId='" + roleId + '\'' +
+                ", sysRole=" + sysRole +
                 '}';
     }
 }

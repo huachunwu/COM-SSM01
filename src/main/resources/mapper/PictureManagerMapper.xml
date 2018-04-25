@@ -27,7 +27,7 @@
     </insert>
     <!--制空-->
     <update id="updatePictureManagerAllPState" >
-        update picture_manager  set p_state=null
+        update picture_manager  set p_state="0"
     </update>
 
     <update id="editPictureManager" parameterType="PictureManager">
@@ -36,4 +36,7 @@
     <delete id="deletePictureManagerByPId" parameterType="string">
         delete from picture_manager where p_id=#{pId}
     </delete>
+    <select id="pictureManagercount" resultType="int">
+        select count(*) from picture_manager
+    </select>
 </mapper>

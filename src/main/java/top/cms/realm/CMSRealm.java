@@ -16,6 +16,10 @@ import top.cms.utils.DateToString;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 认证授权登录
+ * @author yhmi
+ */
 public class CMSRealm extends AuthorizingRealm {
     @Autowired
     private SysUserService sysUserService;
